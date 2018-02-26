@@ -1,11 +1,17 @@
-FROM debian:stretch
-MAINTAINER Jacob Chen "jacob2.chen@rock-chips.com"
+FROM hub.c.163.com/library/debian:stretch
+MAINTAINER larkchen "larkchen@163.com"
 
 # setup multiarch enviroment
 RUN dpkg --add-architecture armhf
-RUN echo "deb-src http://deb.debian.org/debian stretch main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian stretch-updates main" >> /etc/apt/sources.list
-RUN echo "deb-src http://security.debian.org stretch/updates main" >> /etc/apt/sources.list
+RUN echo "" > /etc/apt/sources.list && \
+    echo "deb      http://mirrors.163.com/debian/           stretch            main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb      http://mirrors.163.com/debian/           stretch-updates    main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb      http://mirrors.163.com/debian/           stretch-backports  main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src  http://mirrors.163.com/debian/           stretch            main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src  http://mirrors.163.com/debian/           stretch-updates    main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src  http://mirrors.163.com/debian/           stretch-backports  main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb      http://mirrors.163.com/debian-security/  stretch/updates    main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src  http://mirrors.163.com/debian-security/  stretch/updates    main non-free contrib" >> /etc/apt/sources.list
 RUN apt-get update && apt-get install -y crossbuild-essential-armhf
 
 # perpare build dependencies
